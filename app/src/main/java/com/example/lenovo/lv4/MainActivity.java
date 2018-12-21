@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,7 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 public String cityName;
     List<Forecast> forecasts=new ArrayList<Forecast>();
     RecyclerAdapter recyclerAdapter;
@@ -27,9 +28,9 @@ public String cityName;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button getCity = findViewById(R.id.getCityName);
-        EditText editText = findViewById(R.id.getCity);
-        cityName = editText.getText().toString();
-        initdata();
+
+     getCity.setOnClickListener(this);
+
         recyclerView = findViewById(R.id.recyclerview);
         recyclerAdapter = new RecyclerAdapter(forecasts, this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -91,5 +92,12 @@ Forecast forecast1=new Forecast(forecast.date,forecast.fengli,forecast.fengxiang
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        EditText editText = findViewById(R.id.getCity);
+        cityName = editText.getText().toString();
+        initdata();
     }
 }
